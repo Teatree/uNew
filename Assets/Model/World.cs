@@ -24,11 +24,45 @@ public class World {
 	}
 
 
-	public Tile GetTileAt(int x, int y){
+	public Tile getTileAt(int x, int y){
 		if (x > width || x < 0) {
 			Debug.LogError ("Tile (" + x + "," + y + ") is out of range!");
 			return null;
 		}
 		return tiles [x, y];
 	}
+
+    public void randomizeTiles()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if(Random.Range(0, 2) == 0)
+                {
+                    tiles[x, y].getType = Tile.Type.Empty;
+                }
+                else
+                {
+                    tiles[x, y].getType = Tile.Type.Floor;
+                }
+            }
+        }
+    }
+
+    public int getWidth
+    {
+        get
+        {
+            return width;
+        }
+    }
+
+    public int getHeight
+    {
+        get
+        {
+            return height;
+        }
+    }
 }
