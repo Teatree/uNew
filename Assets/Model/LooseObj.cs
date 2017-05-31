@@ -1,7 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//=======================================================================
+// Copyright Martin "quill18" Glaude 2015.
+//		http://quill18.com
+//=======================================================================
 
-public class LooseObj {
+using UnityEngine;
+using System.Collections;
+
+public class LooseObject {
 
 }
