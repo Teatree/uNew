@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WorldController : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class WorldController : MonoBehaviour {
 	// The only tile sprite we have right now, so this
 	// it a pretty simple way to handle it.
 	public Sprite floorSprite;
+    public Sprite wallSprite;
+
+    Dictionary<InstalledObject, GameObject> installedObjectGameObjectMap;
 
 	// The world and tile data
 	public World World { get; protected set; }
@@ -28,8 +32,12 @@ public class WorldController : MonoBehaviour {
 		// Create a world with Empty tiles
 		World = new World();
 
-		// Create a GameObject for each of our tiles, so they show visually. (and redunt reduntantly)
-		for (int x = 0; x < World.Width; x++) {
+        World.RegisterInstalledObjectCreated(OnInstallObjectCreated);
+
+        installedObjectGameObjectMap = new Dictionary<InstalledObject, GameObject>();
+        
+        // Create a GameObject for each of our tiles, so they show visually. (and redunt reduntantly)
+        for (int x = 0; x < World.Width; x++) {
 			for (int y = 0; y < World.Height; y++) {
 				// Get the tile data
 				Tile tile_data = World.GetTileAt(x, y);
@@ -86,5 +94,24 @@ public class WorldController : MonoBehaviour {
 		return World.GetTileAt(x, y);
 	}
 
+    public void OnInstallObjectCreated(InstalledObject obj) {
+        Debug.Log("OnInstallObjectCreated");
+        // This creates a new GameObject and adds it to our scene.
+        GameObject obj_go = new GameObject();
+        obj_go.name = obj.objectType + "Tile_" + obj.tile.X + "_" + obj.tile.Y;
+        obj_go.transform.position = new Vector3(obj.tile.X, obj.tile.Y, 0);
+        obj_go.transform.SetParent(this.transform, true);
 
+        // Add a sprite renderer, but don't bother setting a sprite
+        // because all the tiles are empty right now.
+        obj_go.AddComponent<SpriteRenderer>().sprite = wallSprite;
+
+        // Use a lambda to create an anonymous function to "wrap" our callback function
+        obj.RegisterOnChangeCallback(onInstallOnjectChanged);
+        //tile_data.RegisterTileTypeChangedCallback((tile) => { OnTileTypeChanged(tile, tile_go); });
+    }
+
+    void onInstallOnjectChanged (InstalledObject obj) {
+
+    }
 }

@@ -67,5 +67,20 @@ public class Tile {
 	public void UnegisterTileTypeChangedCallback(Action<Tile> callback) {
 		cbTileTypeChanged -= callback;
 	}
+
+    public bool assignIntalledObj(InstalledObject objInstance) {
+        if(objInstance == null) {
+            installedObject = null;
+            return true;
+        }
+
+        if(installedObject != null) {
+            Debug.LogError("Trying to assign an isntalled object to a tile that already has one!");
+            return false;
+        }
+
+        installedObject = objInstance;
+        return true;
+    }
 	
 }

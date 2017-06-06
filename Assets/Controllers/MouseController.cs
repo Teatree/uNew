@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class MouseController : MonoBehaviour {
 
@@ -11,7 +12,9 @@ public class MouseController : MonoBehaviour {
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
 
+    bool buildModeIsObjects = false;
     Tile.TileType buildModeTile = Tile.TileType.Floor;
+    string buildModeObjectType;
 
     // The world-position of the mouse last frame.
     Vector3 lastFramePosition;
@@ -32,17 +35,20 @@ public class MouseController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		currFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-		currFramePosition.z = 0;
+        //if (EventSystem.current.IsPointerOverGameObject()) {
 
-		//UpdateCursor();
-		UpdateDragging();
-		UpdateCameraMovement();
+            currFramePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            currFramePosition.z = 0;
 
-		// Save the mouse position from this frame
-		// We don't use currFramePosition because we may have moved the camera.
-		lastFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-		lastFramePosition.z = 0;
+            //UpdateCursor();
+            UpdateDragging();
+            UpdateCameraMovement();
+
+            // Save the mouse position from this frame
+            // We don't use currFramePosition because we may have moved the camera.
+            lastFramePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            lastFramePosition.z = 0;
+        //}
 	}
 
     /*	void UpdateCursor() {
@@ -111,9 +117,17 @@ public class MouseController : MonoBehaviour {
             for (int x = start_x; x <= end_x; x++) {
 				for (int y = start_y; y <= end_y; y++) {
 					Tile t = WorldController.Instance.World.GetTileAt(x, y);
-					if(t != null) {
-						t.Type = buildModeTile;
-					}
+
+                    if (t != null) {
+                        if (buildModeIsObjects) {
+
+                            WorldController.Instance.World.placeInstalledObject(buildModeObjectType, t);
+
+                        }
+                        else {
+                            t.Type = buildModeTile;
+                        }
+                    }
 				}
 			}
 		}
@@ -140,10 +154,17 @@ public class MouseController : MonoBehaviour {
 
     public void SetModeBuildFloor() {
         buildModeTile = Tile.TileType.Floor;
+        buildModeIsObjects = false;
     }
 
     public void SetModeBuldoze() {
         buildModeTile = Tile.TileType.Empty;
+        buildModeIsObjects = false;
+    }
+
+    public void SetModeBuildObject(string objectType) {
+        buildModeIsObjects = true;
+        buildModeObjectType = objectType;
     }
 
 }

@@ -4,18 +4,25 @@
 //=======================================================================
 
 using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class World {
 
 	// A two-dimensional array to hold our tile data.
 	Tile[,] tiles;
 
+    Dictionary<string, InstalledObject> installedObjectPrototypes;
+
 	// The tile width of the world.
 	public int Width { get; protected set; }
 
 	// The tile height of the world
 	public int Height { get; protected set; }
+
+    Action<InstalledObject> cbInstalledObjectCreated;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="World"/> class.
@@ -35,7 +42,22 @@ public class World {
 		}
 
 		Debug.Log ("World created with " + (Width*Height) + " tiles.");
-	}
+
+        initInstalledObjects();
+    }
+
+    void initInstalledObjects() {
+        installedObjectPrototypes = new Dictionary<string, InstalledObject>();
+  
+        InstalledObject wallProt = InstalledObject.createPrototype(
+            "wall",
+            0f,
+            1,
+            1);
+
+        installedObjectPrototypes.Add("wall", wallProt);
+    }
+
 
 	/// <summary>
 	/// A function for testing out the system
@@ -45,7 +67,7 @@ public class World {
 		for (int x = 0; x < Width; x++) {
 			for (int y = 0; y < Height; y++) {
 
-				if(Random.Range(0, 2) == 0) {
+				if(UnityEngine.Random.Range(0, 2) == 0) {
 					tiles[x,y].Type = Tile.TileType.Empty;
 				}
 				else {
@@ -70,4 +92,32 @@ public class World {
 		return tiles[x, y];
 	}
 
+    public void placeInstalledObject(string objectType, Tile t) {
+
+        Debug.Log("PlaceInstalledObject!");
+
+        if (!installedObjectPrototypes.ContainsKey(objectType)) {
+            Debug.LogError("installedObjectprototypes doesn;t contain a rpoto for key: " + objectType);
+            return;
+        }
+
+        InstalledObject obj = InstalledObject.place(installedObjectPrototypes[objectType], t);
+
+        if (obj == null) {
+            Debug.LogError("Trying to install a wall, probably there is already a wall there");
+            return;
+        }
+
+        if(cbInstalledObjectCreated != null) {
+            cbInstalledObjectCreated(obj);
+        }
+    }
+
+    public void RegisterInstalledObjectCreated(Action<InstalledObject> callfackFunc) {
+        cbInstalledObjectCreated += callfackFunc;
+    }
+
+    public void UnregisterInstalledObjectCreated(Action<InstalledObject> callfackFunc) {
+        cbInstalledObjectCreated -= callfackFunc;
+    }
 }
