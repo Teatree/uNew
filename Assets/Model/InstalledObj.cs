@@ -22,18 +22,23 @@ public class InstalledObject {
     int width = 1;
     int height = 1;
 
+    public bool linksToNeighbour {
+        get; protected set;
+    }
+
     Action<InstalledObject> cbOnChanged;
 
     protected InstalledObject() {
 
     }
 
-    static public InstalledObject createPrototype( string objectType, float movementCost, int width, int height ) {
+    static public InstalledObject createPrototype( string objectType, float movementCost, int width, int height, bool linksToNeighbour ) {
         InstalledObject obj = new InstalledObject();
         obj.objectType = objectType;
         obj.movementCost = movementCost;
         obj.width = width;
         obj.height = height;
+        obj.linksToNeighbour = linksToNeighbour;
 
         return obj;
     }
@@ -44,6 +49,7 @@ public class InstalledObject {
         obj.movementCost = proto.movementCost;
         obj.width = proto.width;
         obj.height = proto.height;
+        obj.linksToNeighbour = proto.linksToNeighbour;
 
         obj.tile = tile;
 

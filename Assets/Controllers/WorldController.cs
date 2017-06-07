@@ -15,15 +15,24 @@ public class WorldController : MonoBehaviour {
 	// The only tile sprite we have right now, so this
 	// it a pretty simple way to handle it.
 	public Sprite floorSprite;
-    public Sprite wallSprite;
 
     Dictionary<InstalledObject, GameObject> installedObjectGameObjectMap;
+
+    Dictionary<string, Sprite> installedObjectSprites;
 
 	// The world and tile data
 	public World World { get; protected set; }
 
 	// Use this for initialization
 	void Start () {
+
+        installedObjectSprites = new Dictionary<string, Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/InstalledObjects/");
+
+        foreach(Sprite s in sprites) {
+            installedObjectSprites[s.name] = s;
+        }
+
 		if(Instance != null) {
 			Debug.LogError("There should never be two world controllers.");
 		}
@@ -104,11 +113,44 @@ public class WorldController : MonoBehaviour {
 
         // Add a sprite renderer, but don't bother setting a sprite
         // because all the tiles are empty right now.
-        obj_go.AddComponent<SpriteRenderer>().sprite = wallSprite;
+        obj_go.AddComponent<SpriteRenderer>().sprite = getSpriteForInstallObject(obj);
 
         // Use a lambda to create an anonymous function to "wrap" our callback function
         obj.RegisterOnChangeCallback(onInstallOnjectChanged);
         //tile_data.RegisterTileTypeChangedCallback((tile) => { OnTileTypeChanged(tile, tile_go); });
+    }
+
+    Sprite getSpriteForInstallObject(InstalledObject obj) {
+        if(obj.linksToNeighbour == false) {
+            return installedObjectSprites[obj.objectType];
+        }
+
+        string spriteName = obj.objectType + "_";
+
+        //Check for neighbours 
+        int x = obj.tile.X;
+        int y = obj.tile.Y;
+
+        Tile t;
+
+        t = World.GetTileAt(x, y + 1);
+        if(t != null && t.installedObject != null && t.installedObject.objectType == obj.objectType) {
+            spriteName += "N";
+        }
+        t = World.GetTileAt(x, y - 1);
+        if (t != null && t.installedObject != null && t.installedObject.objectType == obj.objectType) {
+            spriteName += "S";
+        }
+        t = World.GetTileAt(x + 1, y);
+        if (t != null && t.installedObject != null && t.installedObject.objectType == obj.objectType) {
+            spriteName += "E";
+        }
+        t = World.GetTileAt(x - 1, y);
+        if (t != null && t.installedObject != null && t.installedObject.objectType == obj.objectType) {
+            spriteName += "W";
+        }
+
+        return installedObjectSprites[spriteName];
     }
 
     void onInstallOnjectChanged (InstalledObject obj) {

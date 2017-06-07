@@ -53,7 +53,8 @@ public class World {
             "wall",
             0f,
             1,
-            1);
+            1,
+            true); // links to neighbours
 
         installedObjectPrototypes.Add("wall", wallProt);
     }
