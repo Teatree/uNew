@@ -121,7 +121,7 @@ public class MouseController : MonoBehaviour {
                     if (t != null) {
                         if (buildModeIsObjects) {
 
-                            WorldController.Instance.World.placeInstalledObject(buildModeObjectType, t);
+                            WorldController.Instance.World.placeFurniture(buildModeObjectType, t);
 
                         }
                         else {

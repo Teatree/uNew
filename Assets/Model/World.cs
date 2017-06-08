@@ -14,7 +14,7 @@ public class World {
 	// A two-dimensional array to hold our tile data.
 	Tile[,] tiles;
 
-    Dictionary<string, InstalledObject> installedObjectPrototypes;
+    Dictionary<string, Furniture> furniturePrototypes;
 
 	// The tile width of the world.
 	public int Width { get; protected set; }
@@ -22,7 +22,7 @@ public class World {
 	// The tile height of the world
 	public int Height { get; protected set; }
 
-    Action<InstalledObject> cbInstalledObjectCreated;
+    Action<Furniture> cbFurnitureCreated;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="World"/> class.
@@ -43,20 +43,20 @@ public class World {
 
 		Debug.Log ("World created with " + (Width*Height) + " tiles.");
 
-        initInstalledObjects();
+        initFurniture();
     }
 
-    void initInstalledObjects() {
-        installedObjectPrototypes = new Dictionary<string, InstalledObject>();
+    void initFurniture() {
+        furniturePrototypes = new Dictionary<string, Furniture>();
   
-        InstalledObject wallProt = InstalledObject.createPrototype(
-            "wall",
+        Furniture wallProt = Furniture.createPrototype(
+            "wall_",
             0f,
             1,
             1,
             true); // links to neighbours
 
-        installedObjectPrototypes.Add("wall", wallProt);
+        furniturePrototypes.Add("wall_", wallProt);
     }
 
 
@@ -87,38 +87,38 @@ public class World {
 	/// <param name="y">The y coordinate.</param>
 	public Tile GetTileAt(int x, int y) {
 		if( x > Width || x < 0 || y > Height || y < 0) {
-			Debug.LogError("Tile ("+x+","+y+") is out of range.");
+			//Debug.LogError("Tile ("+x+","+y+") is out of range.");
 			return null;
 		}
 		return tiles[x, y];
 	}
 
-    public void placeInstalledObject(string objectType, Tile t) {
+    public void placeFurniture(string objectType, Tile t) {
 
-        Debug.Log("PlaceInstalledObject!");
+        //Debug.Log("placeFurniture!");
 
-        if (!installedObjectPrototypes.ContainsKey(objectType)) {
+        if (!furniturePrototypes.ContainsKey(objectType)) {
             Debug.LogError("installedObjectprototypes doesn;t contain a rpoto for key: " + objectType);
             return;
         }
 
-        InstalledObject obj = InstalledObject.place(installedObjectPrototypes[objectType], t);
+        Furniture obj = Furniture.place(furniturePrototypes[objectType], t);
 
         if (obj == null) {
             Debug.LogError("Trying to install a wall, probably there is already a wall there");
             return;
         }
 
-        if(cbInstalledObjectCreated != null) {
-            cbInstalledObjectCreated(obj);
+        if(cbFurnitureCreated != null) {
+            cbFurnitureCreated(obj);
         }
     }
 
-    public void RegisterInstalledObjectCreated(Action<InstalledObject> callfackFunc) {
-        cbInstalledObjectCreated += callfackFunc;
+    public void RegisterFurnitureCreated(Action<Furniture> callfackFunc) {
+        cbFurnitureCreated += callfackFunc;
     }
 
-    public void UnregisterInstalledObjectCreated(Action<InstalledObject> callfackFunc) {
-        cbInstalledObjectCreated -= callfackFunc;
+    public void UnregisterFurnitureCreated(Action<Furniture> callfackFunc) {
+        cbFurnitureCreated -= callfackFunc;
     }
 }

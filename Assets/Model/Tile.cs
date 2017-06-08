@@ -32,11 +32,12 @@ public class Tile {
 	LooseObject looseObject;
 
     // InstalledObject is something like a wall, door, or sofa.
-    public InstalledObject installedObject { get; protected set; }
+    public Furniture furniture { get; protected set; }
 
 	// We need to know the context in which we exist. Probably. Maybe.
-	World world;
-	public int X { get; protected set; }
+    public World world { get; protected set; }
+
+    public int X { get; protected set; }
 	public int Y { get; protected set; }
 
 	// The function we callback any time our type changes
@@ -68,18 +69,18 @@ public class Tile {
 		cbTileTypeChanged -= callback;
 	}
 
-    public bool assignIntalledObj(InstalledObject objInstance) {
+    public bool assignIntalledObj(Furniture objInstance) {
         if(objInstance == null) {
-            installedObject = null;
+            furniture = null;
             return true;
         }
 
-        if(installedObject != null) {
+        if(furniture != null) {
             Debug.LogError("Trying to assign an isntalled object to a tile that already has one!");
             return false;
         }
 
-        installedObject = objInstance;
+        furniture = objInstance;
         return true;
     }
 	
