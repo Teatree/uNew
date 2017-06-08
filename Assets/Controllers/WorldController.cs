@@ -26,12 +26,7 @@ public class WorldController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        furnitureSprites = new Dictionary<string, Sprite>();
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Furniture/");
-
-        foreach(Sprite s in sprites) {
-            furnitureSprites[s.name] = s;
-        }
+        loadFurnitureSprites();
 
 		if(Instance != null) {
 			Debug.LogError("There should never be two world controllers.");
@@ -74,6 +69,15 @@ public class WorldController : MonoBehaviour {
 	void Update () {
 
 	}
+
+    void loadFurnitureSprites() {
+        furnitureSprites = new Dictionary<string, Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Furniture/");
+
+        foreach (Sprite s in sprites) {
+            furnitureSprites[s.name] = s;
+        }
+    }
 
 	// This function should be called automatically whenever a tile's type gets changed.
 	void OnTileTypeChanged(Tile tile_data, GameObject tile_go) {
