@@ -121,8 +121,22 @@ public class MouseController : MonoBehaviour {
                     if (t != null) {
                         if (buildModeIsObjects) {
 
-                            WorldController.Instance.World.placeFurniture(buildModeObjectType, t);
+                            //WorldController.Instance.World.placeFurniture(buildModeObjectType, t);
 
+                            string furnitureType = buildModeObjectType;
+
+                            if (WorldController.Instance.World.isFurniturePlacementValid(furnitureType, t) &&
+                                t.pendingFurnitureJob == null) {
+
+                                Job j = new Job(t, (theJob) => {
+                                    WorldController.Instance.World.placeFurniture(furnitureType, theJob.tile);
+                                });
+
+                                t.pendingFurnitureJob = j;
+
+                                WorldController.Instance.World.jobQueue.Enqueue(j);
+                            }
+ 
                         }
                         else {
                             t.Type = buildModeTile;
@@ -132,6 +146,10 @@ public class MouseController : MonoBehaviour {
 			}
 		}
 	}
+
+   // void OnFurnitureJobComplete(string furnitureType, Tile t) {
+   //     WorldController.Instance.World.placeFurniture(buildModeObjectType, t);
+   // }
 
 	void UpdateCameraMovement() {
 		// Handle screen panning

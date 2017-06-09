@@ -23,8 +23,8 @@ public class Tile {
 			_type = value;
 			// Call the callback and let things know we've changed.
 
-			if(cbTileTypeChanged != null && oldType != _type)
-				cbTileTypeChanged(this);
+			if(cbTileChanged != null && oldType != _type)
+				cbTileChanged(this);
 		}
 	}
 
@@ -34,6 +34,8 @@ public class Tile {
     // InstalledObject is something like a wall, door, or sofa.
     public Furniture furniture { get; protected set; }
 
+    public Job pendingFurnitureJob;
+
 	// We need to know the context in which we exist. Probably. Maybe.
     public World world { get; protected set; }
 
@@ -41,7 +43,7 @@ public class Tile {
 	public int Y { get; protected set; }
 
 	// The function we callback any time our type changes
-	Action<Tile> cbTileTypeChanged;
+	Action<Tile> cbTileChanged;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Tile"/> class.
@@ -58,15 +60,15 @@ public class Tile {
 	/// <summary>
 	/// Register a function to be called back when our tile type changes.
 	/// </summary>
-	public void RegisterTileTypeChangedCallback(Action<Tile> callback) {
-		cbTileTypeChanged += callback;
+	public void RegisterTileChangedCallback(Action<Tile> callback) {
+		cbTileChanged += callback;
 	}
 	
 	/// <summary>
 	/// Unregister a callback.
 	/// </summary>
-	public void UnegisterTileTypeChangedCallback(Action<Tile> callback) {
-		cbTileTypeChanged -= callback;
+	public void UnegisterTileChangedCallback(Action<Tile> callback) {
+		cbTileChanged -= callback;
 	}
 
     public bool assignIntalledObj(Furniture objInstance) {

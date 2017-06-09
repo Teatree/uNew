@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 
 public class World {
-
+    
 	// A two-dimensional array to hold our tile data.
 	Tile[,] tiles;
 
@@ -23,14 +23,20 @@ public class World {
 	public int Height { get; protected set; }
 
     Action<Furniture> cbFurnitureCreated;
+    Action<Tile> cbTileChanged;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="World"/> class.
-	/// </summary>
-	/// <param name="width">Width in tiles.</param>
-	/// <param name="height">Height in tiles.</param>
-	public World(int width = 100, int height = 100) {
-		Width = width;
+    // should be replaced by JobQueue class later
+    public Queue<Job> jobQueue;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="World"/> class.
+    /// </summary>
+    /// <param name="width">Width in tiles.</param>
+    /// <param name="height">Height in tiles.</param>
+    public World(int width = 100, int height = 100) {
+        jobQueue = new Queue<Job>();
+
+        Width = width;
 		Height = height;
 
 		tiles = new Tile[Width,Height];
@@ -38,7 +44,8 @@ public class World {
 		for (int x = 0; x < Width; x++) {
 			for (int y = 0; y < Height; y++) {
 				tiles[x,y] = new Tile(this, x, y);
-			}
+                tiles[x, y].RegisterTileChangedCallback(OnTileChanged);
+            }
 		}
 
 		Debug.Log ("World created with " + (Width*Height) + " tiles.");
@@ -105,7 +112,7 @@ public class World {
         Furniture obj = Furniture.place(furniturePrototypes[objectType], t);
 
         if (obj == null) {
-            Debug.LogError("Trying to install a wall, probably there is already a wall there");
+            Debug.LogError("Trying to install a wall, probably there is already a wall there " + obj);
             return;
         }
 
@@ -120,5 +127,24 @@ public class World {
 
     public void UnregisterFurnitureCreated(Action<Furniture> callfackFunc) {
         cbFurnitureCreated -= callfackFunc;
+    }
+
+    public void RegisterTileChanged(Action<Tile> callfackFunc) {
+        cbTileChanged += callfackFunc;
+    }
+
+    public void UnregisterTileChanged(Action<Tile> callfackFunc) {
+        cbTileChanged -= callfackFunc;
+    }
+
+    void OnTileChanged(Tile t) {
+        if (cbTileChanged == null) {
+            return;
+        }
+        cbTileChanged(t);
+    }
+
+    public bool isFurniturePlacementValid(string furnType, Tile t) {
+        return furniturePrototypes[furnType].isValidPosition(t);
     }
 }
