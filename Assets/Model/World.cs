@@ -57,9 +57,9 @@ public class World {
 	void CreateFurniturePrototypes() {
 		furniturePrototypes = new Dictionary<string, Furniture>();
 
-		furniturePrototypes.Add("Wall", 
+		furniturePrototypes.Add("wall_", 
 			Furniture.CreatePrototype(
-								"Wall",
+								"wall_",
 								0,	// Impassable
 								1,  // Width
 								1,  // Height
