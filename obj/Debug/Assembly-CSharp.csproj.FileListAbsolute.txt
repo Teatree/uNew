@@ -29,3 +29,34 @@ D:\_personal_shit\prj3\New Unity Project\Temp\bin\Debug\UnityEngine.VR.xml
 D:\_personal_shit\prj3\New Unity Project\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\_personal_shit\prj3\New Unity Project\obj\Debug\Assembly-CSharp.dll
 D:\_personal_shit\prj3\New Unity Project\obj\Debug\Assembly-CSharp.pdb
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Assembly-CSharp.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\nunit.framework.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEditor.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.Analytics.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.HoloLens.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.Networking.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.UI.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.VR.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Mono.Cecil.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Unity.SerializationLogic.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Unity.DataContract.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Unity.UNetWeaver.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Unity.CecilTools.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEditor.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.UI.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.Networking.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.TestRunner.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\nunit.framework.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.Analytics.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.HoloLens.xml
+D:\_personal_shit\prj3ct\uNew\Temp\bin\Debug\UnityEngine.VR.xml
+D:\_personal_shit\prj3ct\uNew\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\_personal_shit\prj3ct\uNew\obj\Debug\Assembly-CSharp.dll
+D:\_personal_shit\prj3ct\uNew\obj\Debug\Assembly-CSharp.pdb

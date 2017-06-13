@@ -46,9 +46,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Controllers\BuildModeController.cs" />
+     <Compile Include="Assets\Controllers\FurnitureSpriteController.cs" />
+     <Compile Include="Assets\Controllers\JobSpriteController.cs" />
      <Compile Include="Assets\Controllers\MouseController.cs" />
+     <Compile Include="Assets\Controllers\SoundController.cs" />
+     <Compile Include="Assets\Controllers\TileSpriteController.cs" />
      <Compile Include="Assets\Controllers\WorldController.cs" />
      <Compile Include="Assets\Model\Furniture.cs" />
+     <Compile Include="Assets\Model\Inventory.cs" />
+     <Compile Include="Assets\Model\Job.cs" />
+     <Compile Include="Assets\Model\JobQueue.cs" />
      <Compile Include="Assets\Model\LooseObj.cs" />
      <Compile Include="Assets\Model\Tile.cs" />
      <Compile Include="Assets\Model\World.cs" />
