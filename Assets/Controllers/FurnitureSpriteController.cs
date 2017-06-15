@@ -34,9 +34,9 @@ public class FurnitureSpriteController : MonoBehaviour {
 		furnitureSprites = new Dictionary<string, Sprite>();
 		Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Furniture/");
 
-		Debug.Log("LOADED RESOURCE:");
+		//Debug.Log("LOADED RESOURCE:");
 		foreach(Sprite s in sprites) {
-			Debug.Log(s);
+			//Debug.Log(s);
 			furnitureSprites[s.name] = s;
 		}
 	}
@@ -82,8 +82,6 @@ public class FurnitureSpriteController : MonoBehaviour {
 	}
 
 
-
-
 	public Sprite GetSpriteForFurniture(Furniture obj) {
 		if(obj.linksToNeighbour == false) {
 			return furnitureSprites[obj.objectType];
@@ -91,7 +89,7 @@ public class FurnitureSpriteController : MonoBehaviour {
 
 		// Otherwise, the sprite name is more complicated.
 
-		string spriteName = obj.objectType + "_";
+		string spriteName = obj.objectType;
 
 		// Check for neighbours North, East, South, West
 
@@ -104,13 +102,13 @@ public class FurnitureSpriteController : MonoBehaviour {
 		if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
 			spriteName += "N";
 		}
-		t = world.GetTileAt(x+1, y);
+        t = world.GetTileAt(x, y - 1);
+        if (t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
+            spriteName += "S";
+        }
+        t = world.GetTileAt(x+1, y);
 		if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
 			spriteName += "E";
-		}
-		t = world.GetTileAt(x, y-1);
-		if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
-			spriteName += "S";
 		}
 		t = world.GetTileAt(x-1, y);
 		if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {

@@ -94,5 +94,24 @@ public class Tile {
 		furniture = objInstance;
 		return true;
 	}
-	
+
+    public bool IsNeighbour(Tile tile, bool diagOkay = false) {
+        if (this.X == tile.X && (tile.Y == tile.Y + 1 || this.Y == tile.Y - 1)) {
+            return true;
+        }
+        if (this.Y == tile.Y && (tile.X == tile.X + 1 || this.X == tile.X - 1)) {
+            return true;
+        }
+        if (diagOkay) {
+            if (this.X == tile.X+1 && (tile.Y == tile.Y + 1 || this.Y == tile.Y - 1)) {
+                return true;
+            }else if (this.X == tile.X - 1 && (tile.Y == tile.Y + 1 || this.Y == tile.Y - 1)) {
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+
 }

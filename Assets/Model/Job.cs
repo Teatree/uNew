@@ -46,7 +46,7 @@ public class Job {
 		if(jobTime <= 0) {
 			if(cbJobComplete != null)
 				cbJobComplete(this);
-		}
+        }
 	}
 
 	public void CancelJob() {

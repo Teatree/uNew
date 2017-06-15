@@ -28,13 +28,16 @@ public class WorldController : MonoBehaviour {
 		// Center the Camera
 		Camera.main.transform.position = new Vector3( world.Width/2, world.Height/2, Camera.main.transform.position.z );
 	}
-		
-	/// <summary>
-	/// Gets the tile at the unity-space coordinates
-	/// </summary>
-	/// <returns>The tile at world coordinate.</returns>
-	/// <param name="coord">Unity World-Space coordinates.</param>
-	public Tile GetTileAtWorldCoord(Vector3 coord) {
+
+    void Update() {
+        world.Update(Time.deltaTime);
+    }
+    /// <summary>
+    /// Gets the tile at the unity-space coordinates
+    /// </summary>
+    /// <returns>The tile at world coordinate.</returns>
+    /// <param name="coord">Unity World-Space coordinates.</param>
+    public Tile GetTileAtWorldCoord(Vector3 coord) {
 		int x = Mathf.FloorToInt(coord.x);
 		int y = Mathf.FloorToInt(coord.y);
 		

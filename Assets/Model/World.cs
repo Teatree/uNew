@@ -11,6 +11,7 @@ public class World {
 
 	// A two-dimensional array to hold our tile data.
 	Tile[,] tiles;
+    List<Character> characters;
 
 	Dictionary<string, Furniture> furniturePrototypes;
 
@@ -21,7 +22,8 @@ public class World {
 	public int Height { get; protected set; }
 
 	Action<Furniture> cbFurnitureCreated;
-	Action<Tile> cbTileChanged;
+    Action<Character> cbCharacterCreated;
+    Action<Tile> cbTileChanged;
 
 	// TODO: Most likely this will be replaced with a dedicated
 	// class for managing job queues (plural!) that might also
@@ -49,10 +51,30 @@ public class World {
 			}
 		}
 
-		Debug.Log ("World created with " + (Width*Height) + " tiles.");
+		//Debug.Log ("World created with " + (Width*Height) + " tiles.");
 
 		CreateFurniturePrototypes();
-	}
+
+        characters = new List<Character>();
+    }
+
+    public void Update (float deltaTime) {
+
+        foreach(Character c in characters) {
+            c.Update(deltaTime);
+        }
+    }
+
+    public Character createCharacter(Tile t) {
+        Character c = new Character(t);
+
+        characters.Add(c);
+
+        if(cbCharacterCreated != null)
+            cbCharacterCreated(c);
+
+        return c;
+    }
 
 	void CreateFurniturePrototypes() {
 		furniturePrototypes = new Dictionary<string, Furniture>();
@@ -131,7 +153,15 @@ public class World {
 		cbFurnitureCreated -= callbackfunc;
 	}
 
-	public void RegisterTileChanged(Action<Tile> callbackfunc) {
+    public void RegisterCharacterCreated(Action<Character> callbackfunc) {
+        cbCharacterCreated += callbackfunc;
+    }
+
+    public void UnregisterCharacterCreated(Action<Character> callbackfunc) {
+        cbCharacterCreated -= callbackfunc;
+    }
+
+    public void RegisterTileChanged(Action<Tile> callbackfunc) {
 		cbTileChanged += callbackfunc;
 	}
 
