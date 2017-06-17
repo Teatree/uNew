@@ -7,6 +7,7 @@ public class CharacterSpriteController : MonoBehaviour {
     Dictionary<Character, GameObject> characterGameObjectMap;
 
     Dictionary<string, Sprite> characterSprites;
+    public RuntimeAnimatorController ani;
 
     World world {
         get { return WorldController.Instance.world; }
@@ -48,8 +49,12 @@ public class CharacterSpriteController : MonoBehaviour {
         character_go.transform.SetParent(this.transform, true);
 
         SpriteRenderer sr = character_go.AddComponent<SpriteRenderer>();
-        sr.sprite = characterSprites["char"];
         sr.sortingLayerName = "Characters";
+
+        character_go.AddComponent<Animator>().runtimeAnimatorController = ani;
+        //character_go.GetComponent<Animator>().Play(0,0);
+
+        //sr.sprite = ani.animationClips;
 
         // Register our callback so that our GameObject gets updated whenever
         // the object's into changes.
@@ -66,6 +71,20 @@ public class CharacterSpriteController : MonoBehaviour {
         }
 
         GameObject character_go = characterGameObjectMap[character];
+
+        if (character.movementPerc > 0) {
+            character_go.GetComponent<Animator>().SetBool("isWalking", true);
+        } else {
+            character_go.GetComponent<Animator>().SetBool("isWalking", false);
+        }
+
+        if (character.currTile.X > character.destTile.X) {
+            character_go.GetComponent<SpriteRenderer>().flipX = true;
+            //character_go
+        } else {
+            character_go.GetComponent<SpriteRenderer>().flipX = false;
+        }
+
         //Debug.Log(furn_go);
         //Debug.Log(furn_go.GetComponent<SpriteRenderer>());
 

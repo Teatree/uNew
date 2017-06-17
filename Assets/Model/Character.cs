@@ -24,8 +24,13 @@ public class Character {
         get; protected set;
     }
 
-    Tile destTile;
-    float movementPerc;
+    public Tile destTile {
+        get; protected set;
+    }
+
+    public float movementPerc{
+        get; protected set;
+    }
 
     float speed = 2f;    //Tiles per second
 
@@ -60,7 +65,7 @@ public class Character {
             return;        
         }
 
-        float distToTravel = Mathf.Sqrt(Mathf.Pow(currTile.X - destTile.X, 2) + Mathf.Pow(currTile.X - destTile.X, 2));
+        float distToTravel = Mathf.Sqrt(Mathf.Pow(currTile.X - destTile.X, 2) + Mathf.Pow(currTile.Y - destTile.Y, 2));
 
         float distThisFrame = speed * deltaTime;
 

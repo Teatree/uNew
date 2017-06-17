@@ -58,10 +58,11 @@ public class FurnitureSpriteController : MonoBehaviour {
 		furn_go.transform.SetParent(this.transform, true);
 
 		furn_go.AddComponent<SpriteRenderer>().sprite = GetSpriteForFurniture(furn);
+        furn_go.GetComponent<SpriteRenderer>().sortingLayerName = "Furniture";
 
-		// Register our callback so that our GameObject gets updated whenever
-		// the object's into changes.
-		furn.RegisterOnChangedCallback( OnFurnitureChanged );
+        // Register our callback so that our GameObject gets updated whenever
+        // the object's into changes.
+        furn.RegisterOnChangedCallback( OnFurnitureChanged );
 
 	}
 
