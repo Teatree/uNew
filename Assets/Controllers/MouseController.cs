@@ -45,10 +45,12 @@ public class MouseController : MonoBehaviour {
 			dragStartPosition = currFramePosition;
 		}
 
-		int start_x = Mathf.FloorToInt( dragStartPosition.x );
-		int end_x =   Mathf.FloorToInt( currFramePosition.x );
-		int start_y = Mathf.FloorToInt( dragStartPosition.y );
-		int end_y =   Mathf.FloorToInt( currFramePosition.y );
+
+
+		int start_x = Mathf.RoundToInt( dragStartPosition.x);
+		int end_x =   Mathf.RoundToInt( currFramePosition.x);
+		int start_y = Mathf.RoundToInt( dragStartPosition.y);
+		int end_y =   Mathf.RoundToInt( currFramePosition.y);
 		
 		// We may be dragging in the "wrong" direction, so flip things if needed.
 		if(end_x < start_x) {
