@@ -58,7 +58,7 @@ public class CharacterSpriteController : MonoBehaviour {
 
         // Register our callback so that our GameObject gets updated whenever
         // the object's into changes.
-        character.RegisterCharacterChangedCallback(OnCharacterChanged);
+        character.RegisterOnChangedCallback(OnCharacterChanged);
 
     }
 
