@@ -25,7 +25,7 @@ public class Character {
     Path_AStar pathAStar;
     public float movementPerc; // Goes from 0 to 1 as we move from currTile to destTile
 
-    float speed = 5f;   // Tiles per second
+    float speed = 3f;   // Tiles per second
 
     Action<Character> cbCharacterChanged;
 
