@@ -22,6 +22,7 @@ public class Job {
 		this.tile = tile;
 		this.jobDataType = jobObjectType;
 		this.cbJobComplete += cbJobComplete;
+        this.jobTime = jobTime;
 	}
 
 	public void RegisterJobCompleteCallback(Action<Job> cb) {

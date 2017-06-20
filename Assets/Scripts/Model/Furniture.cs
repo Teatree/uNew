@@ -27,10 +27,12 @@ public class Furniture {
 	// For example, a "rough" tile (cost of 2) with a table (cost of 3) that is on fire (cost of 3)
 	// would have a total movement cost of (2+3+3 = 8), so you'd move through this tile at 1/8th normal speed.
 	// SPECIAL: If movementCost = 0, then this tile is impassible. (e.g. a wall).
-	float movementCost; 
+    public float movementCost {
+        get; protected set;
+    }
 
-	// For example, a sofa might be 3x2 (actual graphics only appear to cover the 3x1 area, but the extra row is for leg room.)
-	int width;
+    // For example, a sofa might be 3x2 (actual graphics only appear to cover the 3x1 area, but the extra row is for leg room.)
+    int width;
 	int height;
 
 	public bool linksToNeighbour{

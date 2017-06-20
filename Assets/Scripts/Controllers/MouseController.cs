@@ -45,8 +45,6 @@ public class MouseController : MonoBehaviour {
 			dragStartPosition = currFramePosition;
 		}
 
-
-
 		int start_x = Mathf.RoundToInt( dragStartPosition.x);
 		int end_x =   Mathf.RoundToInt( currFramePosition.x);
 		int start_y = Mathf.RoundToInt( dragStartPosition.y);

@@ -13,6 +13,8 @@ public class World {
 	Tile[,] tiles;
     List<Character> characters;
 
+    public PathTileGraph tileGraph;
+
 	Dictionary<string, Furniture> furniturePrototypes;
 
 	// The tile width of the world.
@@ -142,7 +144,8 @@ public class World {
 
 		if(cbFurnitureCreated != null) {
 			cbFurnitureCreated(obj);
-		}
+            InvalidateTimeGraph();
+        }
 	}
 
 	public void RegisterFurnitureCreated(Action<Furniture> callbackfunc) {
@@ -174,7 +177,13 @@ public class World {
 			return;
 		
 		cbTileChanged(t);
+
+        InvalidateTimeGraph();
 	}
+
+    public void InvalidateTimeGraph() {
+        tileGraph = null;
+    }
 
 	public bool IsFurniturePlacementValid(string furnitureType, Tile t) {
 		return furniturePrototypes[furnitureType].IsValidPosition(t);

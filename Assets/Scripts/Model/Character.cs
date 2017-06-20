@@ -74,6 +74,7 @@ public class Character {
         movementPerc += percThisFrame;
 
         if(movementPerc >= 1) {
+            // Destination reached
             currTile = destTile;
             movementPerc = 0;
         }

@@ -67,8 +67,6 @@ public class BuildModeController : MonoBehaviour {
 
 			}
 
-
-
 		}
 		else {
 			// We are in tile-changing mode.
