@@ -60,6 +60,11 @@ public class PathTileGraph {
             for (int i = 0; i < neighbours.Length; i++) {
                 if (neighbours[i] != null && neighbours[i].movementCost > 0) {
                     // This neighbour exists and is walkable, so create an edge.
+
+                    if (isClippingCorner (t, neighbours[i])) {
+                        continue;
+                    }
+
                     PathEdge<Tile> e = new PathEdge<Tile>();
                     e.cost = neighbours[i].movementCost;
                     e.node = nodes[neighbours[i]];
@@ -78,4 +83,20 @@ public class PathTileGraph {
 
     }
 
+    bool isClippingCorner(Tile curr, Tile neighbour) {
+
+        int dX = curr.X - neighbour.X;
+        int dY = curr.Y - neighbour.Y;
+
+        if (Mathf.Abs(dX) + Mathf.Abs(dY) == 2) { //is there a walkable tile on diagonal points around curr
+          
+            if (curr.world.GetTileAt(curr.X - dX, curr.Y).movementCost == 0) {
+                return true;
+            }
+            if (curr.world.GetTileAt(curr.X, curr.Y - dY).movementCost == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

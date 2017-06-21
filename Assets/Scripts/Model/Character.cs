@@ -75,6 +75,7 @@ public class Character {
             return; // We're already were we want to be.
         }
 
+        // PATHFINDING!
         if (nextTile == null || nextTile == currTile) {
             // Get the next tile from the pathfinder.
             if (pathAStar == null || pathAStar.Length() == 0) {

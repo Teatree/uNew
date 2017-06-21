@@ -147,7 +147,7 @@ public class Tile {
         n = world.GetTileAt(X - 1, Y);
         ns[3] = n;
 
-        if (diagOkay == true) {
+        if (diagOkay == true) {         
             n = world.GetTileAt(X + 1, Y + 1);
             ns[4] = n;
             n = world.GetTileAt(X + 1, Y - 1);
