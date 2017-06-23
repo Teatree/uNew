@@ -26,26 +26,31 @@ public class TileSpriteController : MonoBehaviour {
 		// Instantiate our dictionary that tracks which GameObject is rendering which Tile data.
 		tileGameObjectMap = new Dictionary<Tile, GameObject>();
 
+
 		// Create a GameObject for each of our tiles, so they show visually. (and redunt reduntantly)
 		for (int x = 0; x < world.Width; x++) {
 			for (int y = 0; y < world.Height; y++) {
-				// Get the tile data
-				Tile tile_data = world.GetTileAt(x, y);
+                // Get the tile data
+                //var perlin = Mathf.PerlinNoise((float)x / 9, (float)y / 9);                              // just remove this
+                //Debug.Log("x: " + x + " y: "+ y + " || perlin - " + perlin);
+                //if (perlin > .5f) {                                                                       // and this
+                    Tile tile_data = world.GetTileAt(x, y);
 
-				// This creates a new GameObject and adds it to our scene.
-				GameObject tile_go = new GameObject();
+                    // This creates a new GameObject and adds it to our scene.
+                    GameObject tile_go = new GameObject();
 
-				// Add our tile/GO pair to the dictionary.
-				tileGameObjectMap.Add( tile_data, tile_go );
+                    tile_go.name = "Tile_" + x + "_" + y;
+                    tile_go.transform.position = new Vector3( tile_data.X, tile_data.Y, 0);
+                    //tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity); // and this
+                    tile_go.transform.SetParent(this.transform, true);
 
-				tile_go.name = "Tile_" + x + "_" + y;
-				tile_go.transform.position = new Vector3( tile_data.X, tile_data.Y, 0);
-				tile_go.transform.SetParent(this.transform, true);
+                    // Add our tile/GO pair to the dictionary.
+                    tileGameObjectMap.Add(tile_data, tile_go);
 
-				// Add a Sprite Renderer
-				// Add a default sprite for empty tiles.
-				tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
-
+                    // Add a Sprite Renderer
+                    // Add a default sprite for empty tiles. THIS IS WHERE YOU SET THE TYPE
+                    tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
+                //}
 			}
 		}
 

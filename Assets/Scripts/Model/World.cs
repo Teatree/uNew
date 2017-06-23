@@ -58,6 +58,8 @@ public class World {
 		CreateFurniturePrototypes();
 
         characters = new List<Character>();
+        //RandomizeTiles();
+
     }
 
     public void Update (float deltaTime) {
