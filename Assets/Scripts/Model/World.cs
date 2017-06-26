@@ -58,7 +58,7 @@ public class World {
 		CreateFurniturePrototypes();
 
         characters = new List<Character>();
-        //RandomizeTiles();
+        RandomizeTiles();
 
     }
 
@@ -102,12 +102,21 @@ public class World {
 		for (int x = 0; x < Width; x++) {
 			for (int y = 0; y < Height; y++) {
 
-				if(UnityEngine.Random.Range(0, 2) == 0) {
-					tiles[x,y].Type = TileType.Empty;
-				}
-				else {
-					tiles[x,y].Type = TileType.Floor;
-				}
+                var perlin = Mathf.PerlinNoise((float)x / 9, (float)y / 9);                              // just remove this
+                //Debug.Log("x: " + x + " y: "+ y + " || perlin - " + perlin);
+                if (perlin > .5f) {
+
+                    tiles[x, y].Type = TileType.Floor;
+
+                   // tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity);
+
+                    //if (UnityEngine.Random.Range(0, 2) == 0) {
+                     //   tiles[x, y].Type = TileType.Empty;
+                    //}
+                    //else {
+                      //  tiles[x, y].Type = TileType.Floor;
+                    //}
+                }
 
 			}
 		}

@@ -26,7 +26,6 @@ public class TileSpriteController : MonoBehaviour {
 		// Instantiate our dictionary that tracks which GameObject is rendering which Tile data.
 		tileGameObjectMap = new Dictionary<Tile, GameObject>();
 
-
 		// Create a GameObject for each of our tiles, so they show visually. (and redunt reduntantly)
 		for (int x = 0; x < world.Width; x++) {
 			for (int y = 0; y < world.Height; y++) {
@@ -46,12 +45,18 @@ public class TileSpriteController : MonoBehaviour {
                     tile_go.transform.position = new Vector3( tile_data.X, tile_data.Y, 0);
                     //tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity); // and this
                     tile_go.transform.SetParent(this.transform, true);
-
+                    
                     // Add a Sprite Renderer
                     // Add a default sprite for empty tiles. THIS IS WHERE YOU SET THE TYPE
-                    tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
+                    if(tile_data.Type == TileType.Empty) {
+                        tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
+                    }
+                    else {
+                        tile_go.AddComponent<SpriteRenderer>().sprite = floorSprite;
+                    }
+                    
                 //}
-			}
+            }
 		}
 
 		// Register our callback so that our GameObject gets updated whenever
