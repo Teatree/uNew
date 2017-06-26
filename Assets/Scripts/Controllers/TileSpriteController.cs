@@ -39,13 +39,13 @@ public class TileSpriteController : MonoBehaviour {
                     // This creates a new GameObject and adds it to our scene.
                     GameObject tile_go = new GameObject();
 
+                    // Add our tile/GO pair to the dictionary.
+                    tileGameObjectMap.Add(tile_data, tile_go);
+
                     tile_go.name = "Tile_" + x + "_" + y;
                     tile_go.transform.position = new Vector3( tile_data.X, tile_data.Y, 0);
                     //tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity); // and this
                     tile_go.transform.SetParent(this.transform, true);
-
-                    // Add our tile/GO pair to the dictionary.
-                    tileGameObjectMap.Add(tile_data, tile_go);
 
                     // Add a Sprite Renderer
                     // Add a default sprite for empty tiles. THIS IS WHERE YOU SET THE TYPE
