@@ -7,6 +7,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.Xml.Serialization;
 
 public class WorldController : MonoBehaviour {
 
@@ -14,6 +16,7 @@ public class WorldController : MonoBehaviour {
 
 	// The world and tile data
 	public World world { get; protected set; }
+    static bool loadWorld = false;
 
 	// Use this for initialization
 	void OnEnable () {
@@ -22,12 +25,15 @@ public class WorldController : MonoBehaviour {
 		}
 		Instance = this;
 
-		// Create a world with Empty tiles
-		world = new World();
-
-		// Center the Camera
-		Camera.main.transform.position = new Vector3( world.Width/2, world.Height/2, Camera.main.transform.position.z );
-	}
+        if (loadWorld) {
+            loadWorld = false;
+            CreateSavedWorld();
+        }
+        else {
+            CreateEmptyWorld();
+        }
+        
+    }
 
     void Update() {
         world.Update(Time.deltaTime);
@@ -43,5 +49,40 @@ public class WorldController : MonoBehaviour {
 		
 		return world.GetTileAt(x, y);
 	}
+
+    public void NewWorld() {
+        SceneManager.LoadScene( SceneManager.GetActiveScene().name );
+    }
+
+    public void SaveWorld() {
+        XmlSerializer serializer = new XmlSerializer( typeof(World) );
+        System.IO.TextWriter writer = new System.IO.StringWriter();
+        serializer.Serialize(writer, world);
+        writer.Close();
+
+        Debug.Log(writer.ToString());
+    }
+
+    public void LoadWorld() {
+        loadWorld = true;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void CreateEmptyWorld() {
+        // Create a world with Empty tiles
+        world = new World(100, 100);
+
+        // Center the Camera
+        Camera.main.transform.position = new Vector3(world.Width / 2, world.Height / 2, Camera.main.transform.position.z);
+    }
+
+    void CreateSavedWorld() {
+        // Create a world with Empty tiles
+        world = new World(100, 100);
+
+        // Center the Camera
+        Camera.main.transform.position = new Vector3(world.Width / 2, world.Height / 2, Camera.main.transform.position.z);
+    }
 
 }
