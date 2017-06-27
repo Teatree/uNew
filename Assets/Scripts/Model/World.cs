@@ -99,26 +99,33 @@ public class World {
 	/// </summary>
 	public void RandomizeTiles() {
 		Debug.Log ("RandomizeTiles");
-		for (int x = 0; x < Width; x++) {
+        int xC = UnityEngine.Random.Range(10, 20);
+        int yC = UnityEngine.Random.Range(10, 20);
+        for (int x = 0; x < Width; x++) {
 			for (int y = 0; y < Height; y++) {
-
-                var perlin = Mathf.PerlinNoise((float)x / 9, (float)y / 9);                              // just remove this
+                
+                var perlin = Mathf.PerlinNoise((float)x / xC, (float)y / yC);                              // just remove this
                 //Debug.Log("x: " + x + " y: "+ y + " || perlin - " + perlin);
-                if (perlin > .5f) {
-
-                    tiles[x, y].Type = TileType.Floor;
-
-                   // tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity);
-
-                    //if (UnityEngine.Random.Range(0, 2) == 0) {
-                     //   tiles[x, y].Type = TileType.Empty;
-                    //}
-                    //else {
-                      //  tiles[x, y].Type = TileType.Floor;
-                    //}
+                if (perlin > .4f) {
+                    tiles[x, y].Type = TileType.Grass;
                 }
+                if (perlin < .4f && perlin > .3f) {
+                    tiles[x, y].Type = TileType.Earth;
+                }
+                if (perlin < .3f) {
+                    tiles[x, y].Type = TileType.Water;
+                }
+                // tile_go = (GameObject)Instantiate(tile_go, new Vector3(x, y, 2), Quaternion.identity);
 
-			}
+                //if (UnityEngine.Random.Range(0, 2) == 0) {
+                //   tiles[x, y].Type = TileType.Empty;
+                //}
+                //else {
+                //  tiles[x, y].Type = TileType.Floor;
+                //}
+
+
+            }
 		}
 	}
 

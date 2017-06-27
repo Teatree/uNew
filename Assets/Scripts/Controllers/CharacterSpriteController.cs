@@ -78,10 +78,10 @@ public class CharacterSpriteController : MonoBehaviour {
             character_go.GetComponent<Animator>().SetBool("isWalking", false);
         }
 
-        if (character.currTile.X > character.destTile.X) {
+        if (character.currTile.X > character.nextTile.X) {
             character_go.GetComponent<SpriteRenderer>().flipX = true;
             //character_go
-        } else {
+        } if (character.currTile.X < character.nextTile.X) {
             character_go.GetComponent<SpriteRenderer>().flipX = false;
         }
 

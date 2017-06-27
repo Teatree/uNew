@@ -21,7 +21,9 @@ public class Character {
 
 
     public Tile destTile;  // If we aren't moving, then destTile = currTile
-    Tile nextTile;  // The next tile in the pathfinding sequence
+    public Tile nextTile {
+        get; protected set;
+    }                                // The next tile in the pathfinding sequence
     Path_AStar pathAStar;
     public float movementPerc; // Goes from 0 to 1 as we move from currTile to destTile
 

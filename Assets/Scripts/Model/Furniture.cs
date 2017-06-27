@@ -141,8 +141,8 @@ public class Furniture {
 	// FIXME: These functions should never be called directly,
 	// so they probably shouldn't be public functions of Furniture
 	public bool __IsValidPosition(Tile t) {
-		// Make sure tile is FLOOR
-		if( t.Type != TileType.Floor ) {
+		// Only unbuilable EMPTY
+		if( t.Type == TileType.Empty || t.Type == TileType.Water ) {
 			return false;
 		}
 

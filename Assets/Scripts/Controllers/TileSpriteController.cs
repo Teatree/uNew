@@ -12,8 +12,11 @@ public class TileSpriteController : MonoBehaviour {
 
 	// The only tile sprite we have right now, so this
 	// it a pretty simple way to handle it.
-	public Sprite floorSprite;	// FIXME!
-	public Sprite emptySprite;	// FIXME!
+	public Sprite floorSprite;  // FIXME!
+    public Sprite earthSprite;  // FIXME!
+    public Sprite grassSprite;  // FIXME!
+    public Sprite waterSprite;	// FIXME!
+    public Sprite emptySprite;	// FIXME!
 
 	Dictionary<Tile, GameObject> tileGameObjectMap;
 
@@ -51,7 +54,16 @@ public class TileSpriteController : MonoBehaviour {
                     if(tile_data.Type == TileType.Empty) {
                         tile_go.AddComponent<SpriteRenderer>().sprite = emptySprite;
                     }
-                    else {
+                    if (tile_data.Type == TileType.Earth) {
+                        tile_go.AddComponent<SpriteRenderer>().sprite = earthSprite;
+                    }
+                    if (tile_data.Type == TileType.Grass) {
+                        tile_go.AddComponent<SpriteRenderer>().sprite = grassSprite;
+                    }
+                    if (tile_data.Type == TileType.Water) {
+                        tile_go.AddComponent<SpriteRenderer>().sprite = waterSprite;
+                    }
+                    if (tile_data.Type == TileType.Floor) {
                         tile_go.AddComponent<SpriteRenderer>().sprite = floorSprite;
                     }
                     

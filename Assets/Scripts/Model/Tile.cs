@@ -11,7 +11,7 @@ using System;
 // the terrain type. For us, we only need to differentiate between empty space
 // and floor (a.k.a. the station structure/scaffold). Walls/Doors/etc... will be
 // InstalledObjects sitting on top of the floor.
-public enum TileType { Empty, Floor };
+public enum TileType { Empty, Earth, Grass, Water, Floor };
 
 public class Tile {
     private TileType _type = TileType.Empty;
@@ -50,6 +50,9 @@ public class Tile {
         get {
             if (Type == TileType.Empty) {
                 return 0; // can't walk
+            }
+            if (Type == TileType.Water) {
+                return 0;
             }
             if (furniture == null) {
                 return 1;
