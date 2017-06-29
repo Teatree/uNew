@@ -6,6 +6,9 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Xml.Serialization;
+using System.Xml.Schema;
+using System.Xml;
 
 // TileType is the base type of the tile. In some tile-based games, that might be
 // the terrain type. For us, we only need to differentiate between empty space
@@ -13,7 +16,7 @@ using System;
 // InstalledObjects sitting on top of the floor.
 public enum TileType { Empty, Earth, Grass, Water, Floor };
 
-public class Tile {
+public class Tile : IXmlSerializable {
     private TileType _type = TileType.Empty;
     public TileType Type {
         get { return _type; }
@@ -163,5 +166,23 @@ public class Tile {
 
         return ns;
 
+    }
+
+    public XmlSchema GetSchema() {
+        return null;
+    }
+
+    public void ReadXml(XmlReader reader) {
+        X = int.Parse(reader.GetAttribute("X"));
+        Y = int.Parse(reader.GetAttribute("Y"));
+        Type = (TileType)int.Parse(reader.GetAttribute("Type"));
+
+        
+    }
+
+    public void WriteXml(XmlWriter writer) {
+        writer.WriteAttributeString("X", X.ToString());
+        writer.WriteAttributeString("Y", Y.ToString());
+        writer.WriteAttributeString("Type", ((int)Type).ToString());
     }
 }

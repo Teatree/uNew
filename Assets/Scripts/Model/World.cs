@@ -42,27 +42,29 @@ public class World : IXmlSerializable {
 	/// <param name="width">Width in tiles.</param>
 	/// <param name="height">Height in tiles.</param>
 	public World(int width, int height) {
-		jobQueue = new JobQueue();
+        SetUpWorld(width, height);
+    }
 
-		Width = width;
-		Height = height;
+    void SetUpWorld(int width, int height) {
+        jobQueue = new JobQueue();
 
-		tiles = new Tile[Width,Height];
+        Width = width;
+        Height = height;
 
-		for (int x = 0; x < Width; x++) {
-			for (int y = 0; y < Height; y++) {
-				tiles[x,y] = new Tile(this, x, y);
-				tiles[x,y].RegisterTileTypeChangedCallback( OnTileChanged );
-			}
-		}
+        tiles = new Tile[Width, Height];
 
-		//Debug.Log ("World created with " + (Width*Height) + " tiles.");
+        for (int x = 0; x < Width; x++) {
+            for (int y = 0; y < Height; y++) {
+                tiles[x, y] = new Tile(this, x, y);
+                tiles[x, y].RegisterTileTypeChangedCallback(OnTileChanged);
+            }
+        }
 
-		CreateFurniturePrototypes();
+        //Debug.Log ("World created with " + (Width*Height) + " tiles.");
+
+        CreateFurniturePrototypes();
 
         characters = new List<Character>();
-        RandomizeTiles();
-
     }
 
     public void Update (float deltaTime) {
@@ -224,17 +226,40 @@ public class World : IXmlSerializable {
     }
 
     public void ReadXml(XmlReader reader) {
-        throw new NotImplementedException();
+        Debug.Log("XML RUNS!");
+        int width = int.Parse(reader.GetAttribute("Width"));
+        int height = int.Parse(reader.GetAttribute("Height"));
+
+        SetUpWorld(width, height);
+
+        reader.ReadToDescendant("Tiles");
+        reader.ReadToDescendant("Tile");
+        while (reader.IsStartElement("Tile")) {
+
+            int x = int.Parse(reader.GetAttribute("X"));
+            int y = int.Parse(reader.GetAttribute("Y"));
+
+            tiles[x, y].ReadXml(reader);
+
+            reader.ReadToNextSibling("Tile");
+        }
+        Debug.Log(reader.ToString());
     }
 
     public void WriteXml(XmlWriter writer) {
+        //width x height
         writer.WriteAttributeString( "Width", Width.ToString() );
         writer.WriteAttributeString( "Height", Height.ToString() );
-
-        writer.WriteStartElement("Width");
-        writer.WriteValue(Width);
-        writer.WriteStartElement("Height");
-        writer.WriteValue(Height);
+        // Tiles
+        writer.WriteStartElement("Tiles");
+        for(int x = 0; x < Width; x++) {
+            for(int y = 0; y < Height; y++) {
+                writer.WriteStartElement("Tile");
+                tiles[x, y].WriteXml(writer);
+                writer.WriteEndElement();
+            }
+        }
+        writer.WriteEndElement();
     }
 
     public World() {
