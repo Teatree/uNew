@@ -28,7 +28,11 @@ public class FurnitureSpriteController : MonoBehaviour {
 		// Register our callback so that our GameObject gets updated whenever
 		// the tile's type changes.
 		world.RegisterFurnitureCreated(OnFurnitureCreated);
-	}
+
+        foreach (Furniture furn in world.furnitures) {
+            OnFurnitureCreated(furn);
+        }
+    }
 
 	void LoadSprites() {
 		furnitureSprites = new Dictionary<string, Sprite>();

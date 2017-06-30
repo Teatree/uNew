@@ -176,8 +176,6 @@ public class Tile : IXmlSerializable {
         X = int.Parse(reader.GetAttribute("X"));
         Y = int.Parse(reader.GetAttribute("Y"));
         Type = (TileType)int.Parse(reader.GetAttribute("Type"));
-
-        
     }
 
     public void WriteXml(XmlWriter writer) {

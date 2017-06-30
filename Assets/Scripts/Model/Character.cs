@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
-public class Character {
+public class Character : IXmlSerializable {
     public float X {
         get {
             return Mathf.Lerp(currTile.X, nextTile.X, movementPerc);
@@ -176,5 +179,17 @@ public class Character {
         }
 
         myJob = null;
+    }
+
+    public XmlSchema GetSchema() {
+        return null;
+    }
+
+    public void WriteXml(XmlWriter writer) {
+        writer.WriteAttributeString("X", currTile.X.ToString());
+        writer.WriteAttributeString("Y", currTile.Y.ToString());
+    }
+
+    public void ReadXml(XmlReader reader) {
     }
 }

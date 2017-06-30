@@ -70,7 +70,6 @@ public class WorldController : MonoBehaviour {
         loadWorld = true;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 
     void CreateEmptyWorld() {

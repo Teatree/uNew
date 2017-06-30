@@ -6,10 +6,13 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Xml.Serialization;
+using System.Xml.Schema;
+using System.Xml;
 
 // InstalledObjects are things like walls, doors, and furniture (e.g. a sofa)
 
-public class Furniture {
+public class Furniture : IXmlSerializable {
 
 	// This represents the BASE tile of the object -- but in practice, large objects may actually occupy
 	// multile tiles.
@@ -103,21 +106,21 @@ public class Furniture {
 			int y = tile.Y;
 
 			t = tile.world.GetTileAt(x, y+1);
-			if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
+			if(t != null && t.furniture != null && t.furniture.cbOnChanged != null && t.furniture.objectType == obj.objectType) {
 				// We have a Northern Neighbour with the same object type as us, so
 				// tell it that it has changed by firing is callback.
 				t.furniture.cbOnChanged(t.furniture);
 			}
 			t = tile.world.GetTileAt(x+1, y);
-			if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
+			if(t != null && t.furniture != null && t.furniture.cbOnChanged != null && t.furniture.objectType == obj.objectType) {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 			t = tile.world.GetTileAt(x, y-1);
-			if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
+			if(t != null && t.furniture != null && t.furniture.cbOnChanged != null && t.furniture.objectType == obj.objectType) {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 			t = tile.world.GetTileAt(x-1, y);
-			if(t != null && t.furniture != null && t.furniture.objectType == obj.objectType) {
+			if(t != null && t.furniture != null && t.furniture.cbOnChanged != null && t.furniture.objectType == obj.objectType) {
 				t.furniture.cbOnChanged(t.furniture);
 			}
 
@@ -163,4 +166,20 @@ public class Furniture {
 		return true;
 	}
 
+    public XmlSchema GetSchema() {
+        return null;
+    }
+
+    public void ReadXml(XmlReader reader) {
+        movementCost = float.Parse(reader.GetAttribute("movementCost"));
+    }
+
+    public void WriteXml(XmlWriter writer) {
+        writer.WriteAttributeString("X", tile.X.ToString());
+        writer.WriteAttributeString("Y", tile.Y.ToString());
+        writer.WriteAttributeString("linksToNeighbour", linksToNeighbour.ToString());
+        writer.WriteAttributeString("objectType", objectType.ToString());
+        writer.WriteAttributeString("movementCost", movementCost.ToString());
+       // Debug.Log("writer, furniture: " + writer);
+    }
 }
